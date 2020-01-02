@@ -7,8 +7,7 @@ module.exports = class CsvParser {
     const csvPromise = new Promise((resolve, reject) => {
       let results = []
       fs.createReadStream(input)
-        //these header are hardcoded because the file doesn't have them defined
-        .pipe(csv(['id', '2', 'type', '4', 'name', '6', '7', '8', '9', 'date', '11', '12', '13', '14']))
+        .pipe(csv())
           .on('data', (data) => {
               results.push(data)
           })
