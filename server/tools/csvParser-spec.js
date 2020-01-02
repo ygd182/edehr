@@ -1,23 +1,20 @@
-var should = require('should')
-var request = require('supertest')
+const should = require('should')
+const request = require('supertest')
+const testFilePath = __dirname + "/../tools/drug-test.txt";
 import csvParser from './csvParser'
-import Config from '../config/config'
-
-const config = new Config('test')
-const configuration = config.config
-
 
 describe('Parse CSV file', function () {
-  let app
+  let parser
   before(function (done) {
+    parser = new csvParser();
+    done()
   })
 
-  it('return a json ouput', function (done) {
-    csvParser
-      .end(function (err, res) {
-        should.not.exist(err)
+  it('Should return a json ouput', function (done) {
+    parser.parseCsvFile(testFilePath)
+      .then(function (res) {
         should.exist(res)
-         console.log(res)
+        res.data[0].should.have.property('name')
         done()
       })
   })
